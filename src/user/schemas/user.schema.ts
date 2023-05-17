@@ -23,7 +23,6 @@ class FullNameInfo {
 export class UserListInfo {
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
   users: ObjectId[];
-  // users: User[];
 
   @Prop({
     default: 0,
@@ -82,6 +81,8 @@ class Profile {
 @Schema({ timestamps: true })
 export class User {
   @Prop({
+    trim: true,
+    index: true,
     unique: true,
     required: true,
   })
@@ -99,17 +100,25 @@ export class User {
   role: RoleType;
 
   @Prop({
+    trim: true,
+    index: true,
     unique: true,
     required: true,
   })
   email: string;
 
   @Prop({
+    trim: true,
+    index: true,
     unique: true,
+    sparse: true,
   })
   phoneNumber?: string;
 
-  @Prop(Profile)
+  @Prop({
+    type: Profile,
+    sparse: true,
+  })
   profile?: Profile;
 }
 

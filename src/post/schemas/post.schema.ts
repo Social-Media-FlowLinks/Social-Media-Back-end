@@ -1,15 +1,12 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
 
-// import { User, UserListInfo } from 'src/user/schemas/user.schema';
-
 export type PostDocument = HydratedDocument<Post>;
 
 @Schema({ _id: false })
 export class UserListInfo {
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
   users: ObjectId[];
-  // users: User[];
 
   @Prop({
     default: 0,
@@ -32,7 +29,6 @@ class Comment {
     type: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   })
   userId: ObjectId;
-  // userId: User;
 
   @Prop({ required: true })
   body: string;
@@ -47,6 +43,7 @@ class Comment {
 
   @Prop({
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }],
+    sparse: true,
   })
   replies: Comment[];
 }
@@ -55,10 +52,8 @@ class Comment {
 export class Post {
   @Prop({
     type: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    // required: true,
   })
   ownerId: ObjectId;
-  // ownerId: User;
 
   @Prop()
   caption: string;
@@ -77,7 +72,10 @@ export class Post {
   @Prop(UserListInfo)
   likes: UserListInfo;
 
-  @Prop([Comment])
+  @Prop({
+    type: Comment,
+    sparse: true,
+  })
   comments: Comment[];
 }
 
