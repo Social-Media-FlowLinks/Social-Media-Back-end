@@ -5,7 +5,7 @@ import { Post } from 'src/post/schemas/post.schema';
 
 export type UserDocument = HydratedDocument<User>;
 
-enum RoleType {
+export enum RoleType {
   ADMIN = 'ADMIN',
   USER = 'USER',
 }
@@ -103,17 +103,9 @@ export class User {
     trim: true,
     index: true,
     unique: true,
-    required: true,
-  })
-  email: string;
-
-  @Prop({
-    trim: true,
-    index: true,
-    unique: true,
     sparse: true,
   })
-  phoneNumber?: string;
+  mobile?: string;
 
   @Prop({
     type: Profile,

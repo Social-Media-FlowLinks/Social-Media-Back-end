@@ -4,7 +4,7 @@ import mongoose, { HydratedDocument, ObjectId } from 'mongoose';
 export type PostDocument = HydratedDocument<Post>;
 
 @Schema({ _id: false })
-export class UserListInfo {
+class UserListInfo {
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }] })
   users: ObjectId[];
 

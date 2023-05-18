@@ -6,5 +6,11 @@ import { Post } from './schemas/post.schema';
 
 @Injectable()
 export class PostService {
-  // constructor(@InjectModel(Post.name) private postModel: Model<Post>) {}
+  constructor(
+    @InjectModel(Post.name) private readonly postModel: Model<Post>,
+  ) {}
+
+  async createNewPost(): Promise<Post> {
+    return await this.postModel.create({});
+  }
 }
