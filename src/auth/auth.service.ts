@@ -1,13 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { UserService } from 'src/user/user.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
-    
-    createUser(userName: string, password: string, phoneNumber: string) {
-        throw new Error('Method not implemented.');
-    }
+  constructor(private readonly userService: UserService) {}
 
-    isActive(userName, password, activeWithPhoneNumber) {
-        throw new Error('Method not implemented.');
-    }
+  async createUser(userName: string, password: string, phoneNumber: string) {
+    const hashedpassword = await bcrypt.hash(password, 10);
+    return await this.userService.createUser(
+      userName,
+      hashedpassword,
+      phoneNumber,
+    );
+  }
+
+  isActive(userName, password, activeWithPhoneNumber) {
+    throw new Error('Method not implemented.');
+  }
 }

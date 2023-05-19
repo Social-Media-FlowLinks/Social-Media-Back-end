@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
@@ -13,17 +13,21 @@ export class UserService {
     userName: string,
     hashedpassword: string,
     phoneNumber: string,
-  ): Promise<User> {
-    this.userModel.exists({userName})
+  ): Promise<User | Error> {
+    if (this.userModel.exists({ userName })) {
+      throw new HttpException(
+        'This username is already registered',
+        HttpStatus.CONFLICT,
+      );
+    }
     try {
-      return await this.userModel.create({
+      return await this.userModel.create({ 
         userName,
         password: hashedpassword,
         phoneNumber,
       });
     } catch (error) {
-        throw new Error();
-
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
 }
