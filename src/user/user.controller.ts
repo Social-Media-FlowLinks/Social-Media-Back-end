@@ -12,7 +12,7 @@ export class UserController {
   @Post('/signup')
   async signUp(@Body() userCreateDto: UserCreateDto): Promise<any> {
     const { email, password, phoneNumber, username } = userCreateDto;
-
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     return await this.userService.createUser(
       username,
@@ -21,6 +21,4 @@ export class UserController {
       email,
     );
   }
-
-  // @Post('/signin')
 }
