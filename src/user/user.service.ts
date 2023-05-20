@@ -43,4 +43,22 @@ export class UserService {
     return await this.userModel.findById(id);
   }
 
+  async getAllUsers() {
+    return await this.userModel.find({}, '_id username email');
+  }
+
+  async updateUserServ(userId, body) {
+    return await this.userModel.findByIdAndUpdate(userId, {
+      $set: {
+        username: body.username,
+        email: body.username !== null && body.email,
+        password: body.password !== null && body.password,
+        phoneNumber: body.phoneNumber !== null && body.phoneNumber,
+      },
+    });
+  }
+
+  async deleteUserByIdServ(userId) {
+    return await this.userModel.findByIdAndDelete(userId);
+  }
 }
