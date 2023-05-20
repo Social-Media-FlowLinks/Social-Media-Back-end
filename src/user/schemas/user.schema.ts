@@ -105,7 +105,7 @@ export class User {
     unique: true,
     sparse: true,
   })
-  mobile?: string;
+  phoneNumber: string;
 
   @Prop({
     type: Profile,
