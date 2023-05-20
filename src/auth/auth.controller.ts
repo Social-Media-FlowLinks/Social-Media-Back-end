@@ -15,7 +15,7 @@ export class AuthController {
 
   @Post('login')
   async signIn(@Body() userLogingDto: UserLogingDto ) {
-    const {userName, password, activeWithPhoneNumber} = userLogingDto;
-    return await this.authService.isActive(userName, password, activeWithPhoneNumber)
+    const {userName, password, phoneNumber} = userLogingDto;
+    return await this.authService.isActive(userName, password, phoneNumber)
   }
 }

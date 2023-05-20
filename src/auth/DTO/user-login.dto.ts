@@ -8,7 +8,9 @@ export class UserLogingDto {
   @IsNotEmpty()
   password: string;
 
-  @IsBoolean()
-  activeWithPhoneNumber: boolean;
+  @Matches(/^09[0-9]{9}$/)
+  @IsNotEmpty()
+  @IsString()
+  phoneNumber: string;
   
 }
